@@ -1,39 +1,53 @@
 package model
 
 import (
-	"github.com/murillolamego/golang-basic/src/config/rest_err"
 	"golang.org/x/crypto/bcrypt"
 )
+
+type UserDomainInterface interface {
+	GetEmail() string
+	GetPassword() string
+	GetName() string
+	GetAge() int8
+
+	EncryptUserPassword() error
+}
 
 func NewUserDomain(
 	email, password, name string,
 	age int8,
 ) UserDomainInterface {
-	return &UserDomain{
+	return &userDomain{
 		email, password, name, age,
 	}
 }
 
-type UserDomain struct {
-	Email    string
-	Password string
-	Name     string
-	Age      int8
+type userDomain struct {
+	email    string
+	password string
+	name     string
+	age      int8
 }
 
-func (ud *UserDomain) EncryptUserPassword() error {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(ud.Password), 12)
+func (ud *userDomain) GetEmail() string {
+	return ud.email
+}
+func (ud *userDomain) GetPassword() string {
+	return ud.password
+}
+func (ud *userDomain) GetName() string {
+	return ud.name
+}
+func (ud *userDomain) GetAge() int8 {
+	return ud.age
+}
+
+func (ud *userDomain) EncryptUserPassword() error {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(ud.password), 12)
 	if err != nil {
 		return err
 	}
 
-	ud.Password = string(bytes)
+	ud.password = string(bytes)
 	return nil
-}
-
-type UserDomainInterface interface {
-	CreateUser() (*UserDomain, *rest_err.RestErr)
-	FindUser(string) *rest_err.RestErr
-	UpdateUser(string) (*UserDomain, *rest_err.RestErr)
-	DeleteUser(string) *rest_err.RestErr
 }
