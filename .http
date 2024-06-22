@@ -10,10 +10,10 @@ Content-Type: application/json
 Authorization: Bearer ACCESS-TOKEN
 
 {
-   "email":"test@test.",
+   "email":"test@test.com",
    "password":"test@123",
    "name":"test",
-   "age":1
+   "age":19
 }
 
 ### GET categories
