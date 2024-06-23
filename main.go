@@ -1,15 +1,14 @@
 package main
 
 import (
+	"context"
 	"log"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/murillolamego/golang-basic/src/config/database/mongodb"
 	"github.com/murillolamego/golang-basic/src/config/logger"
-	"github.com/murillolamego/golang-basic/src/controller"
 	"github.com/murillolamego/golang-basic/src/controller/routes"
-	"github.com/murillolamego/golang-basic/src/model/service"
 )
 
 func main() {
@@ -19,10 +18,13 @@ func main() {
 		log.Fatal("Could not load env file")
 	}
 
-	mongodb.InitConnection()
+	database, err := mongodb.NewMongoDBConnection(context.Background())
+	if err != nil {
+		log.Fatalf("Failed to connect to database, error=%s", err.Error())
+		return
+	}
 
-	service := service.NewUserDomainService()
-	userController := controller.NewUserControllerInterface(service)
+	userController := initDependencies(database)
 
 	router := gin.Default()
 

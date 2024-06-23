@@ -3,13 +3,15 @@ package service
 import (
 	"github.com/murillolamego/golang-basic/src/config/rest_err"
 	"github.com/murillolamego/golang-basic/src/model"
+	"github.com/murillolamego/golang-basic/src/model/repository"
 )
 
-func NewUserDomainService() UserDomainService {
-	return &userDomainService{}
+func NewUserDomainService(userRepository repository.UserRepository) UserDomainService {
+	return &userDomainService{userRepository}
 }
 
 type userDomainService struct {
+	userRepository repository.UserRepository
 }
 
 type UserDomainService interface {

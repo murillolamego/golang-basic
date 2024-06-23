@@ -11,12 +11,17 @@ func (ud *userDomainService) CreateUser(userDomain model.UserDomainInterface) (m
 
 	err := userDomain.EncryptUserPassword()
 	if err != nil {
-
 		logger.Error("error trying to encrypt user password", err, zap.String("journey", "createUser"))
+
 		restErr := rest_err.NewInternalServerErrorfunc("error trying to encrypt user password")
 
 		return userDomain, restErr
 	}
 
-	return userDomain, nil
+	userDomainRepository, domainErr := ud.userRepository.CreateUser(userDomain)
+	if domainErr != nil {
+		return nil, domainErr
+	}
+
+	return userDomainRepository, nil
 }
