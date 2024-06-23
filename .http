@@ -4,16 +4,22 @@
 ### GET users
 GET {{apiurl}}/users HTTP/1.1
 
+### GET user by ID
+GET {{apiurl}}/getUserById/66777d1b9242370bf4575b31 HTTP/1.1
+
+### GET user by EMAIL
+GET {{apiurl}}/getUserByEmail/test@test.com HTTP/1.1
+
 ### POST users
 POST {{apiurl}}/createUser HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer ACCESS-TOKEN
 
 {
-   "email":"test@test.com",
+   "email":"test2@test.com",
    "password":"test@123",
-   "name":"test",
-   "age":19
+   "name":"test2",
+   "age":20
 }
 
 ### GET categories
