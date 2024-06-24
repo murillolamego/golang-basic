@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -18,7 +19,9 @@ func main() {
 		log.Fatal("Could not load env file")
 	}
 
-	database, err := mongodb.NewMongoDBConnection(context.Background())
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	database, err := mongodb.NewMongoDBConnection(ctx)
 	if err != nil {
 		log.Fatalf("Failed to connect to database, error=%s", err.Error())
 		return

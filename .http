@@ -5,10 +5,20 @@
 GET {{apiurl}}/users HTTP/1.1
 
 ### GET user by ID
-GET {{apiurl}}/getUserById/66777d1b9242370bf4575b31 HTTP/1.1
+GET {{apiurl}}/getUserById/6679950897cdf7bbd7a0f8dc HTTP/1.1
 
 ### GET user by EMAIL
-GET {{apiurl}}/getUserByEmail/test@test.com HTTP/1.1
+GET {{apiurl}}/getUserByEmail/test3@test.com HTTP/1.1
+
+### UPDATE user by ID
+PATCH {{apiurl}}/updateUser/6679ba8a410ffe8a9952b215 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer ACCESS-TOKEN
+
+{
+   "name":"test000",
+   "age":99
+}
 
 ### POST users
 POST {{apiurl}}/createUser HTTP/1.1
@@ -16,9 +26,9 @@ Content-Type: application/json
 Authorization: Bearer ACCESS-TOKEN
 
 {
-   "email":"test2@test.com",
+   "email":"test54@test.com",
    "password":"test@123",
-   "name":"test2",
+   "name":"test54",
    "age":20
 }
 

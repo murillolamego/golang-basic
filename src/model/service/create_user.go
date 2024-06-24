@@ -8,7 +8,6 @@ import (
 )
 
 func (ud *userDomainService) CreateUser(userDomain model.UserDomainInterface) (model.UserDomainInterface, *rest_err.RestErr) {
-
 	err := userDomain.EncryptUserPassword()
 	if err != nil {
 		logger.Error("error trying to encrypt user password", err, zap.String("journey", "createUser"))
