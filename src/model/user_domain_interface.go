@@ -1,5 +1,7 @@
 package model
 
+import "github.com/murillolamego/golang-basic/src/config/rest_err"
+
 type UserDomainInterface interface {
 	GetID() string
 	GetEmail() string
@@ -11,6 +13,7 @@ type UserDomainInterface interface {
 
 	EncryptUserPassword() error
 	CheckUserPassword(hashedPassword string) error
+	GenerateToken() (string, *rest_err.RestErr)
 }
 
 func NewUserDomain(

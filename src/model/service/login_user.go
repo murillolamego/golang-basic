@@ -7,7 +7,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func (ud *userDomainService) LoginUser(userDomain model.UserDomainInterface) (model.UserDomainInterface, *rest_err.RestErr) {
+func (ud *userDomainService) LoginUser(userDomain model.UserDomainInterface) (model.UserDomainInterface, string, *rest_err.RestErr) {
 
 	user, restErr := ud.FindUserByEmail(userDomain.GetEmail())
 	if restErr != nil {
@@ -15,7 +15,12 @@ func (ud *userDomainService) LoginUser(userDomain model.UserDomainInterface) (mo
 
 		restErr := rest_err.NewBadRequestError("invalid credentials provided, please try again")
 
-		return nil, restErr
+		return nil, "", restErr
+	}
+
+	token, tokenErr := user.GenerateToken()
+	if tokenErr != nil {
+		return nil, "", tokenErr
 	}
 
 	err := userDomain.CheckUserPassword(user.GetPassword())
@@ -24,13 +29,8 @@ func (ud *userDomainService) LoginUser(userDomain model.UserDomainInterface) (mo
 
 		restErr := rest_err.NewBadRequestError("invalid credentials provided, please try again")
 
-		return nil, restErr
+		return nil, "", restErr
 	}
 
-	userDomainRepository, domainErr := ud.userRepository.CreateUser(userDomain)
-	if domainErr != nil {
-		return nil, domainErr
-	}
-
-	return userDomainRepository, nil
+	return user, token, nil
 }
