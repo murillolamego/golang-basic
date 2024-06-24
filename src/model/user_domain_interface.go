@@ -10,6 +10,7 @@ type UserDomainInterface interface {
 	SetID(string)
 
 	EncryptUserPassword() error
+	CheckUserPassword(hashedPassword string) error
 }
 
 func NewUserDomain(
@@ -31,5 +32,14 @@ func NewUpdateUserDomain(
 	return &userDomain{
 		name: name,
 		age:  age,
+	}
+}
+
+func NewUserLoginDomain(
+	email, password string,
+) UserDomainInterface {
+	return &userDomain{
+		email:    email,
+		password: password,
 	}
 }
