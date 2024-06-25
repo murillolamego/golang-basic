@@ -1,19 +1,21 @@
 ### Variables 
 @apiurl = http://localhost:8080
+@accesstoken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZ2UiOjY2LCJlbWFpbCI6InRlc3Q2NjZAdGVzdC5jb20iLCJleHAiOjE3MTkzNjExOTcsImlkIjoiNjY3OWY3YzExZmIwMzIyOTEzNGU4ZWIyIiwibmFtZSI6InRlc3Q2NjYifQ.u9vyc2TceclEPQWjZC55PdRojse9hbooq1WWN5bUPLg
 
 ### GET users
 GET {{apiurl}}/users HTTP/1.1
 
 ### GET user by ID
-GET {{apiurl}}/getUserById/6679d7f7b2743187285959d0 HTTP/1.1
+GET {{apiurl}}/getUserById/667a12494c2b72ef58316a20 HTTP/1.1
+Authorization: Bearer {{accesstoken}}
 
 ### GET user by EMAIL
 GET {{apiurl}}/getUserByEmail/test3@test.com HTTP/1.1
 
 ### UPDATE user by ID
-PATCH {{apiurl}}/updateUser/6679d7f7b2743187285959d0 HTTP/1.1
+PATCH {{apiurl}}/updateUser/667a12494c2b72ef58316a20 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer ACCESS-TOKEN
+Authorization: Bearer {{accesstoken}}
 
 {
    "name":"test000000",
@@ -21,24 +23,24 @@ Authorization: Bearer ACCESS-TOKEN
 }
 
 ### DELETE user by ID
-DELETE  {{apiurl}}/deleteUser/6679d7f7b2743187285959d0 HTTP/1.1
+DELETE  {{apiurl}}/deleteUser/667a12494c2b72ef58316a20 HTTP/1.1
 
 ### POST users
 POST {{apiurl}}/createUser HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer ACCESS-TOKEN
+Authorization: Bearer {{accesstoken}}
 
 {
-   "email":"test666@test.com",
+   "email":"test77@test.com",
    "password":"test@123",
-   "name":"test666",
-   "age":66
+   "name":"test77",
+   "age":77
 }
 
 ### LOGIN user
 POST {{apiurl}}/login HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer ACCESS-TOKEN
+Authorization: Bearer {{accesstoken}}
 
 {
    "email":"test666@test.com",

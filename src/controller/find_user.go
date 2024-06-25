@@ -1,16 +1,28 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 	"net/mail"
 
 	"github.com/gin-gonic/gin"
+	"github.com/murillolamego/golang-basic/src/config/logger"
 	"github.com/murillolamego/golang-basic/src/config/rest_err"
+	"github.com/murillolamego/golang-basic/src/model"
 	"github.com/murillolamego/golang-basic/src/view"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func (uc *userControllerInterface) FindUserByID(c *gin.Context) {
+
+	user, err := model.VerifyToken(c.Request.Header.Get("Authorization"))
+	if err != nil {
+		c.JSON(err.Code, err.Message)
+		return
+	}
+
+	logger.Info(fmt.Sprintf("User authenticated: %v", user))
+
 	userId := c.Param("userId")
 
 	if _, err := primitive.ObjectIDFromHex(userId); err != nil {
